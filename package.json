@@ -1,7 +1,7 @@
 {
   "name": "backend-server",
   "version": "1.0.0",
-  "description": "",
+  "description": "Backend de inventario de la Sala Server con Node.js, Express y MySQL/MariaDB",
   "homepage": "https://github.com/SoulDraks/Backend-Server#readme",
   "bugs": {
     "url": "https://github.com/SoulDraks/Backend-Server/issues"
