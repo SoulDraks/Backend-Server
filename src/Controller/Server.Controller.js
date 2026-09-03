@@ -161,6 +161,24 @@ async function Borrar(req, res) {
   res.json({ ok: true });
 }
 
+async function BuscarPorCodigo(req, res) {
+  const codigo = normalizarCodigo(req.params.codigo);
+  if (!codigo) return res.status(400).json({ error: "Falta el código de barras" });
+
+  const [rows] = await pool.query(`
+    SELECT e.*, m.nombre AS modelo_nombre, m.hostname, m.ram, m.cpu,
+           m.almacenamiento, m.gpu, m.so
+    FROM equipos e
+    JOIN modelos m ON m.clave = e.modelo
+    WHERE e.codigo = ? OR e.numero = ?
+    LIMIT 1
+  `, [codigo, codigo]);
+
+  if (!rows.length) return res.status(404).json({ error: "Equipo no encontrado", codigo });
+
+  return res.json({ ok: true, equipo: parsearEquipo(rows[0]) });
+}
+
 module.exports = {
   Estado: manejar(Estado),
   Modelos: manejar(Modelos),
@@ -168,5 +186,6 @@ module.exports = {
   Pendientes: manejar(Pendientes),
   GuardarEquipos: manejar(GuardarEquipos),
   GuardarMovimientos: manejar(GuardarMovimientos),
-  Borrar: manejar(Borrar)
+  Borrar: manejar(Borrar),
+  BuscarPorCodigo: manejar(BuscarPorCodigo)
 };
