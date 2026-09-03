@@ -1,7 +1,6 @@
 const express = require("express");
 const ServerRouter = express.Router();
 const {
-  Prueba,
   Estado,
   Modelos,
   Equipos,
@@ -12,7 +11,6 @@ const {
   BuscarPorCodigo
 } = require("../Controller/Server.Controller");
 
-ServerRouter.get("/prueba/", Prueba);
 ServerRouter.get("/estado", Estado);
 ServerRouter.get("/modelos", Modelos);
 ServerRouter.get("/equipos", Equipos);
